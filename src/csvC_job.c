@@ -13,7 +13,7 @@ _Bool pj_fread(FILE *f, parse_job *pj) {
             pj->pj_buf + pj->pj_buf_len, 
             0, 
             // clear bytes in order to safely pass to fns parsing 64B chunks
-            (pj->pj_buf_len + 63) / 64
+            (pj->pj_buf_len + 63) / 64 * 64
         ); 
     }
     pj->pj_buf_len = bytes_read;
