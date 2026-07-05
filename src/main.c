@@ -20,12 +20,8 @@ flags:\n\
     default: ','\n\
 \n\
 -b <line_break>:\n\
-    descrip: line break identifier (e.g. '\\n' | '\\r\\n' | '\\r')\n\
+    descrip: line break identifier (e.g. '\\n' | '\\r\\n')\n\
     default: inferred from first line\n\
-\n\
--c <comment>:\n\
-    descrip: comment identifier (e.g. '#' | 'NULL')\n\
-    default: '#'; if 'NULL' is passed, then comments are not allowed\n\
 \n\
 -n <n_columns>:\n\
     descrip: expected number of columns (e.g. '5' | '10')\n\
