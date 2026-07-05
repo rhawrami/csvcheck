@@ -31,7 +31,8 @@ void pj_new_job(const char *csv_name, parse_job *pj) {
     pj->pj_buf_len = 0;
     pj->pj_in_quote = false;
     pj->pj_n_fields = 0;
-    pj->pj_n_rows = 0;
+    pj->pj_on_row = 0;
+    pj->pj_on_field = 0;
 }
 
 _Bool pj_report_issue(FILE *out, parse_job *pj, pj_issue issue) {
@@ -42,7 +43,7 @@ _Bool pj_report_issue(FILE *out, parse_job *pj, pj_issue issue) {
                 out, 
                 "%s: Row %llu: field count != %llu\n", 
                 pj->pj_name, 
-                pj->pj_n_rows, 
+                pj->pj_on_row, 
                 pj->pj_n_fields
             );
             break;
@@ -51,7 +52,7 @@ _Bool pj_report_issue(FILE *out, parse_job *pj, pj_issue issue) {
                 out,
                 "%s: Row %llu: missing carriage-return (\\r)",
                 pj->pj_name, 
-                pj->pj_n_rows 
+                pj->pj_on_row 
             );
             break;
         case pji_USEDCR:
@@ -59,7 +60,7 @@ _Bool pj_report_issue(FILE *out, parse_job *pj, pj_issue issue) {
                 out,
                 "%s: Row %llu: used carriage-return (\\r)",
                 pj->pj_name, 
-                pj->pj_n_rows 
+                pj->pj_on_row 
             );
             break;
         case pji_ESCQUOTE:
@@ -67,7 +68,7 @@ _Bool pj_report_issue(FILE *out, parse_job *pj, pj_issue issue) {
                 out,
                 "%s: Row %llu: unescaped quote",
                 pj->pj_name, 
-                pj->pj_n_rows 
+                pj->pj_on_row 
             );
             break;
     }
