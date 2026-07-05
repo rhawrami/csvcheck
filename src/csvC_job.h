@@ -25,7 +25,8 @@ struct parse_job {
     size_t      pj_buf_len;    // Data buffer length.
     size_t      pj_buf_cap;    // Data buffer capacity.
     size_t      pj_n_fields;   // Number of fields in first row.
-    size_t      pj_n_rows;     // Numbers of rows read thus far.
+    size_t      pj_on_field;   // Currently on field X.
+    size_t      pj_on_row;     // Currently on row X.
     uint8_t     pj_delim_char; // Delimiter character.
     _Bool       pj_in_quote;   // Currently within quote (1 if yes).
     _Bool       pj_use_cr;     // Use carriage return for new lines.
