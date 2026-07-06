@@ -3,34 +3,13 @@
 #include <arm_acle.h>
 
 #include "csvC_job.h"
+#include "csvC_cmr_shared.h"
 
 // NOTE: the parsing algorithm below is essentially a copy of the 
 // algorithm written in go assembly.
 // link: https://github.com/rhawrami/vecsv/blob/main/internal/parser/scan.arm64.s
 // And this algorithm is adopted from how simdjson parses JSON documents.
 // link: https://github.com/simdjson/simdjson
-
-static const uint8_t quote_char = '"';
-static const uint8_t linefeed_char = '\n';
-static const uint8_t carriagereturn_char = '\r';
-
-static inline uint64_t prefix_xor_arm64(uint64_t x) {
-    x = __rbitll(x);
-    uint64_t scratch = x >> 1;
-    x ^= scratch;
-    scratch = x >> 2;
-    x ^= scratch;
-    scratch = x >> 4;
-    x ^= scratch;
-    scratch = x >> 8;
-    x ^= scratch;
-    scratch = x >> 16;
-    x ^= scratch;
-    scratch = x >> 32;
-    x ^= scratch;
-
-    return x;
-}
 
 _Bool compare_mask_reduce_arm64(FILE *f_out, parse_job *pj) {
     // comparison vectors
@@ -115,7 +94,7 @@ _Bool compare_mask_reduce_arm64(FILE *f_out, parse_job *pj) {
         m_quote = vgetq_lane_u64((uint64x2_t)res_0, 0);
 
         m_quote |= in_quote;
-        m_quote = prefix_xor_arm_v8(m_quote);
+        m_quote = prefix_xor(m_quote);
         in_quote >>= 63;
 
         m_linefeed_and_delim &= (~m_quote);
