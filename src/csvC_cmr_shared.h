@@ -4,14 +4,14 @@
 #include <stdint.h>
 
 // quote chracter
-const uint8_t quote_char = '"';
+static const uint8_t quote_char = '"';
 // linefeed (LF)
-const uint8_t linefeed_char = '\n';
+static const uint8_t linefeed_char = '\n';
 // carriage return (CR)
-const uint8_t carriagereturn_char = '\r';
+static const uint8_t carriagereturn_char = '\r';
 
 // prefix_xor computes the prefix xor of a 64-bit bitmask.
-inline uint64_t prefix_xor(uint64_t x) {
+static inline uint64_t prefix_xor(uint64_t x) {
     x ^= (x << 1);
     x ^= (x << 2);
     x ^= (x << 4);
