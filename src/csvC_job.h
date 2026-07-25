@@ -6,15 +6,15 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-// pj_issue defines what type of issue was found when parsing a CSV file.
-typedef enum pj_issue pj_issue;
-
 enum pj_issue {
     pji_FIELDCNT, // Field count unequal to first row field count.
     pji_NEEDEDCR, // Used LF when needed CRLF.
     pji_USEDCR,   // Used CRLF when needed only LF.
     pji_ESCQUOTE  // Needed quote escape.
 };
+
+// pj_issue defines what type of issue was found when parsing a CSV file.
+typedef enum pj_issue pj_issue;
 
 // parse_job defines what is needed to parse and check a CSV file.
 typedef struct parse_job parse_job;
