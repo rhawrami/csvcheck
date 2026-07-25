@@ -4,9 +4,6 @@
 #include "csvC_job.h"
 
 _Bool pj_fread(FILE *f, parse_job *pj) {
-    // rm after testing
-    assert(pj->pj_buf_cap & 63 == 0);
-
     size_t bytes_read = fread(pj->pj_buf, 1, pj->pj_buf_cap, f);
     if (bytes_read < pj->pj_buf_cap) {
         memset(
