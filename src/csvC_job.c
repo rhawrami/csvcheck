@@ -4,6 +4,10 @@
 #include "csvC_job.h"
 
 _Bool pj_fread(FILE *f, parse_job *pj) {
+    if (f == NULL) {
+        return false;
+    }
+    
     size_t bytes_read = fread(pj->pj_buf, 1, pj->pj_buf_cap, f);
     if (bytes_read < pj->pj_buf_cap) {
         memset(
@@ -14,9 +18,6 @@ _Bool pj_fread(FILE *f, parse_job *pj) {
         ); 
     }
     pj->pj_buf_len = bytes_read;
-    if (feof(f)) {
-        return true;
-    }
     if (ferror(f)) {
         return false;
     }
@@ -59,7 +60,6 @@ _Bool pj_report_issue(FILE *out, parse_job *pj, pj_issue issue) {
         pj->pj_on_row, 
         pj->pj_n_fields
     );
-
 
     return (_Bool)(ret_val >= 0);
 }
