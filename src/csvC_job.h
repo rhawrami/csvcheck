@@ -34,8 +34,15 @@ struct parse_job {
 
 // pj_fread reads from file `f`, and updates the new buffer length; returns
 // false if an error is encountered; returns true otherwise; reaching EOF can
-// be determined if true is returned, and `pj_buf_len` is set to 0.
+// be determined if true is returned, and `pj_buf_len` is not set to 0 (use pj_hit_EOF).
 _Bool pj_fread(FILE *f, parse_job *pj);
+
+// pj_hit_EOF determines if the parse job has reached the end of the current file
+// being parsed (returns true if so). Note that if an error was encountered, then
+// pj_hit_EOF can still evaluate to true.
+static inline _Bool pj_hit_EOF(parse_job *pj) {
+    return (_Bool)(pj->pj_buf_len < pj->pj_buf_cap);
+}
 
 // pj_new_job clears a parsing job's state in order for a new file to 
 // be able to be parsed.
